@@ -1,11 +1,15 @@
 --- a/accel-pppd/CMakeLists.txt
 +++ b/accel-pppd/CMakeLists.txt
-@@ -113,7 +113,7 @@
- 	main.c
- )
+@@ -176,11 +176,7 @@
+ CHECK_FUNCTION_EXISTS(getcontext HAVE_GETCONTEXT)
+ CHECK_FUNCTION_EXISTS(setcontext HAVE_SETCONTEXT)
  
--TARGET_LINK_LIBRARIES(accel-pppd triton rt pthread ${crypto_lib} pcre)
-+TARGET_LINK_LIBRARIES(accel-pppd triton rt pthread ${crypto_lib} pcre ucontext)
+-IF (HAVE_GETCONTEXT AND HAVE_SETCONTEXT)
+-	TARGET_LINK_LIBRARIES(accel-pppd triton rt pthread ${crypto_lib} pcre2-8)
+-ELSE (HAVE_GETCONTEXT AND HAVE_SETCONTEXT)
+-	TARGET_LINK_LIBRARIES(accel-pppd triton rt pthread ${crypto_lib} pcre2-8 ucontext)
+-ENDIF (HAVE_GETCONTEXT AND HAVE_SETCONTEXT)
++TARGET_LINK_LIBRARIES(accel-pppd triton rt pthread ${crypto_lib} pcre2-8 ucontext)
+ 
  set_property(TARGET accel-pppd PROPERTY CMAKE_SKIP_BUILD_RPATH FALSE)
  set_property(TARGET accel-pppd PROPERTY CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
- set_property(TARGET accel-pppd PROPERTY INSTALL_RPATH_USE_LINK_PATH FALSE)
